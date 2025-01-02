@@ -1,0 +1,39 @@
+# Node.js / npm
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# TypeScript
+*.tsbuildinfo
+*.d.ts
+
+# Prisma
+prisma/migrations/
+prisma/dev.db
+prisma/.env
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build directory (if you're compiling the server-side code)
+dist/
+
+# Environment files
+.env
+.env.*.local
+
+# Coverage reports (if you run tests)
+coverage/

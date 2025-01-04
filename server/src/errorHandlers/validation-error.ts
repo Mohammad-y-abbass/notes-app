@@ -1,8 +1,16 @@
-export class ValidationError extends Error {
+import { Result, ValidationError } from 'express-validator';
+
+export class ValidationsError extends Error {
   status: number;
-  constructor(message = 'Schema Validation Error') {
+  errors: Result<ValidationError>;
+
+  constructor(
+    message : string,
+    errors: Result<ValidationError>
+  ) {
     super(message);
-    this.name = 'ValidationError';
+    this.name = 'Validation Error';
     this.status = 422;
+    this.errors = errors;
   }
 }

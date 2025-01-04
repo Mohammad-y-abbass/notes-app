@@ -1,19 +1,19 @@
 import { User } from 'types/user';
-import { hashPassword } from '@utils/auth';
-import { prisma } from '@database/prismaClient';
+import { compareHashedPassword, hashPassword } from '@utils/auth';
+import { createUser, findUser } from '@database/queries/userQueries';
 
 export async function signupService(user: User) {
   const { username, email, password } = user;
 
   const hashedPassword = await hashPassword(password);
 
-  const newUser = await prisma.user.create({
-    data: {
-      username,
-      email,
-      password: hashedPassword,
-    },
-  });
+  const newUser = await createUser(username, email, hashedPassword);
 
   return newUser;
+}
+
+export async function loginUserService(email: string) {
+  const doesUserExisit = await findUser(email);
+
+  return doesUserExisit;
 }

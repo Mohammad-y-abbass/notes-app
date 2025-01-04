@@ -16,6 +16,7 @@
     "express-rate-limit": "^7.5.0",
     "express-validator": "^7.2.1",
     "jwt": "^0.2.0",
+    "server": "file:",
     "tsconfig-paths": "^4.2.0",
     "winston": "^3.17.0"
   },

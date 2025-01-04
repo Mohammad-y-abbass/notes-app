@@ -1,8 +1,9 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express, NextFunction, Request, Response } from 'express';
 import { main, prisma } from '@database/prismaClient';
 import logger from '@utils/logger';
 import dotenv from 'dotenv';
 import authRoutes from '@routes/authRoute';
+import AppError from 'errorHandlers/AppError';
 
 dotenv.config();
 
@@ -12,6 +13,18 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 9001;
 
+app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
+  const errorResponse = {
+    error: {
+      message: err.message || 'Internal Server Error',
+      status: err.status || 500,
+    },
+  };
+
+  logger.error(err);
+
+  res.status(errorResponse.error.status).json(errorResponse);
+});
 app.use('/api/auth', authRoutes);
 
 app.listen(PORT, () => {
@@ -21,7 +34,7 @@ app.listen(PORT, () => {
       await prisma.$disconnect();
     })
     .catch(async (e) => {
-      logger.info(e);
+      logger.error(e);
       await prisma.$disconnect();
       process.exit(1);
     });
